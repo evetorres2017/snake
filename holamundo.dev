@@ -1,7 +1,7 @@
 [Project]
-FileName=Proyecto 1.dev
-Name=Proyecto 1
-Type=0
+FileName=holamundo.dev
+Name=holamundo
+Type=1
 Ver=2
 ObjFiles=
 Includes=
@@ -9,9 +9,9 @@ Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
-Compiler=-DALLEGRO_STATICLINK
-CppCompiler=-DALLEGRO_STATICLINK
-Linker=-lalleg_s -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lole32 -ldinput -lddraw -ldxguid -lwinmm -ldsound
+Compiler=
+CppCompiler=
+Linker=
 IsCpp=1
 Icon=
 ExeOutput=
@@ -27,8 +27,8 @@ CommandLine=
 Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=0
-CompilerSettings=0000000000000000000000000
+CompilerSet=3
+CompilerSettings=0000000100000000000000000
 UnitCount=1
 
 [VersionInfo]
