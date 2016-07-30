@@ -1,14 +1,40 @@
+/*
+	Clon del videojuego de Snake codigo original de DeividCoptero.
+*/
 #include <iostream>
 #include<conio.h>
 #include<windows.h>
 #include<stdlib.h>
-// Se definen las teclas direccionales
+// Se definen las teclas direccionales.
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
 #define ABAJO 80
 #define ESC 27
 
+// Logo del juego.
+char inicio[50][100]=
+{
+	"                                                                      ",
+	"       * *           **** **   * **** *  *  ****                      ",
+	"        *            *    * *  * *  * ***   *                         ",
+	"        *            *    *  * * **** *  *  ***                       ",
+	"      *****          *    *   ** *  * *   * *                         ",
+	"     * *** *     *****    *    * *  * *   * ****                      ",
+	"    *********                                                         ",
+	"    *********                                                         ",
+	"     *******           ***********               ****************     ",
+	"     *******          **************            ******************    ",
+	"      *******        ****************          ******************     ",
+	"       *******      ******     *******        *******                 ",
+	"        *******    ******       *******      ******                   ",
+	"         ***************         *****************                    ",
+	"          *************           ***************                     ",
+	"           ***********             *************                      ",
+	"                                                                      ",
+};
+
+// Variables globales.
 int cuerpo[200][2];
 int n = 1;
 int tam = 4;
@@ -17,10 +43,11 @@ int y = 12;
 int dir = 3;
 int xc = 30, yc = 15;
 char tecla;
-int velocidad = 160, h=1;
+int velocidad = 160, h = 1;
 int score = 0;
+int pos = 1;
 
-// Funcion para pocicionar el cursor
+// Funcion para pocicionar el cursor.
 void gotoxy(int x, int y){
 	HANDLE hCon;
 	COORD dwPos;
@@ -28,6 +55,24 @@ void gotoxy(int x, int y){
 	dwPos.Y = y;
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hCon, dwPos);
+}
+// Menu inicial con el splash de la serpiente.
+void menu_inicial(){
+	for(int i=0; i<17; i++){
+		for(int j=0; j<71; j++){
+			if(inicio[i][j]=='*'){
+				gotoxy(j+5, i+5); printf("%c", inicio[i][j]);
+			}
+		}
+	}
+	tecla = getch();
+	for(int i=0; i<17; i++){
+		for(int j=0; j<71; j++){
+			if(inicio[i][j]=='*'){
+				gotoxy(j+5, i+5); printf(" ");
+			}
+		}
+	}
 }
 // Funcion para pintar
 void pintar(){
@@ -55,14 +100,17 @@ void guardar_posicion(){
 		n = 1;
 	
 }
+// Funcion para dibujar el cuerpo de la serpiente.
 void dibujar_cuerpo(){
 	for(int i = 1; i<tam; i++){
 		gotoxy(cuerpo[i][0], cuerpo[i][1]); printf("*");
 	}
 }
+// Funcion para borrar el cuerpo de la serpiente.
 void borrar_cuerpo(){
 		gotoxy(cuerpo[n][0], cuerpo[n][1]); printf(" ");
 }
+// Funcion para leer las teclas direccionales.
 void teclear(){
 	if(kbhit()){
 		tecla = getch();
@@ -86,12 +134,14 @@ void teclear(){
 		}
 	}
 }
+// Funcion para incrementar la velocidad de la serpiente.
 void cambiar_velocidad(){
 	if(score == h*20){
 		velocidad -=10;
 		h++;
 	}
 }
+// Funcion para dibujar la comida en pantalla.
 void comida(){
 	if(x == xc && y == yc){
 		printf("\a");
@@ -103,6 +153,7 @@ void comida(){
 		cambiar_velocidad();
 	}
 }
+// Game over.
 bool game_over(){
 	if(y==3 || y==23 || x==2 || x==77){
 		printf("\a \a \a");
@@ -116,11 +167,14 @@ bool game_over(){
 	}
 	return true;
 }
+// Funcion para mostrar el score en pantalla.
 void puntos(){
 	gotoxy(3,1); printf("<Score: %d>", score);
 }
+// Funcion principal.
 int main() {
 	pintar();
+	menu_inicial();
 	gotoxy(xc, yc); printf("%c", 4);
 	while(tecla != ESC && game_over()){
 		borrar_cuerpo();
